@@ -49,7 +49,7 @@ class MailTestCommand extends Command
             $phpmailer->Debugoutput = fn ($error) => $instance->errors[] = $error;
         });
 
-        $recipient = $this->option('to') ?: $this->components->ask('What email address should the test email be sent to?', get_bloginfo('admin_email'));
+        $recipient = $this->option('to') ?: $this->askForRecipient();
 
         $this->components->info("Sending a test email to <fg=blue>{$recipient}</>...");
 
@@ -78,5 +78,21 @@ class MailTestCommand extends Command
 
         $this->components->error('The test email failed to send. The following errors were encountered:');
         $this->line($this->errors->first());
+    }
+
+    /**
+     * Ask the email address to send the test email to.
+     */
+    protected function askForRecipient(): string
+    {
+        $recipient = $this->components->ask('What email address should the test email be sent to?', get_bloginfo('admin_email'));
+
+        if (! filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            $this->components->error('The specified email address is invalid.');
+
+            return $this->askForRecipient();
+        }
+
+        return $recipient;
     }
 }
