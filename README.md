@@ -21,15 +21,17 @@ $ composer require roots/acorn-mail
 
 ## Getting Started
 
-Start by publishing the Acorn mail config:
+Start by publishing Acorn's mail config:
 
 ```sh
 $ wp acorn mail:config
 ```
 
+SMTP credentials are configured using the published `mail.php` config file.
+
 ## Usage
 
-SMTP credentials are configured using the published `mail.php` config file. In most applications, you will want to configure the following environment variables:
+In most applications, you will want to set the following environment variables:
 
 ```env
 MAIL_HOST=
@@ -43,7 +45,7 @@ MAIL_FROM_NAME=
 Once the credentials are properly configured, you can send a test email using Acorn's CLI:
 
 ```sh
-$ wp acorn mail:test
+$ wp acorn mail:test [--to=]
 ```
 
 ## Bug Reports
