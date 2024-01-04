@@ -76,6 +76,8 @@ class MailTestCommand extends Command
 
         if ($this->errors->isEmpty()) {
             $this->components->error('The test email failed to send.');
+
+            return;
         }
 
         $this->errors = $this->errors
