@@ -1,0 +1,31 @@
+{
+  "name": "roots/acorn-mail",
+  "type": "package",
+  "description": "Simple WordPress SMTP using Acorn's mail configuration.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Brandon Nifong",
+      "email": "brandon@tendency.me",
+      "homepage": "https://github.com/log1x"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Roots\\AcornMail\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=8.1"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.13"
+  },
+  "extra": {
+    "acorn": {
+      "providers": [
+        "Roots\\AcornMail\\AcornMailServiceProvider"
+      ]
+    }
+  }
+}
