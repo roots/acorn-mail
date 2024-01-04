@@ -51,6 +51,12 @@ class MailTestCommand extends Command
 
         $recipient = $this->option('to') ?: $this->askForRecipient();
 
+        if (! $this->validEmail($recipient)) {
+            $this->components->error('The specified email address is invalid.');
+
+            return;
+        }
+
         $this->components->info("Sending a test email to <fg=blue>{$recipient}</>...");
 
         $result = wp_mail(
@@ -87,12 +93,20 @@ class MailTestCommand extends Command
     {
         $recipient = $this->components->ask('What email address should the test email be sent to?', get_bloginfo('admin_email'));
 
-        if (! filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+        if (! $this->validEmail($recipient)) {
             $this->components->error('The specified email address is invalid.');
 
             return $this->askForRecipient();
         }
 
         return $recipient;
+    }
+
+    /**
+     * Determine if the email is valid.
+     */
+    protected function validEmail(string $email): bool
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 }
