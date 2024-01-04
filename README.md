@@ -48,6 +48,8 @@ Once the credentials are properly configured, you can send a test email using Ac
 $ wp acorn mail:test [--to=]
 ```
 
+If any errors are detected, they will be printed to console.
+
 ## Bug Reports
 
 If you discover a bug in Acorn Mail, please [open an issue](https://github.com/roots/acorn-mail/issues).
