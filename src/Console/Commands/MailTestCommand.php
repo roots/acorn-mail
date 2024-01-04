@@ -61,8 +61,8 @@ class MailTestCommand extends Command
 
         $result = wp_mail(
             $recipient,
-            'Acorn Mail Test',
-            'This is a test email from Acorn Mail.'
+            'Test Email',
+            'This is a test email from WordPress.'
         );
 
         if ($result) {
