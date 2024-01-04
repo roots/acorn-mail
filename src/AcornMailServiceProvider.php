@@ -13,11 +13,6 @@ class AcornMailServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands([
-            Console\Commands\MailConfigCommand::class,
-            Console\Commands\MailTestCommand::class,
-        ]);
-
         $this->app->singleton('Roots\AcornMail', fn () => AcornMail::make($this->app));
     }
 
@@ -28,6 +23,13 @@ class AcornMailServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Console\Commands\MailConfigCommand::class,
+                Console\Commands\MailTestCommand::class,
+            ]);
+        }
+
         $this->app->make('Roots\AcornMail');
     }
 }
