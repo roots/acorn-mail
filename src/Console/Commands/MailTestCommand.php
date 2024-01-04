@@ -20,7 +20,7 @@ class MailTestCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Test the WordPress SMTP mailer.';
+    protected $description = 'Test the WordPress SMTP mailer';
 
     /**
      * The error collection.
