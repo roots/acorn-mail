@@ -29,6 +29,10 @@ class AcornMail
         $this->config = Collection::make($this->app->config->get('mail.mailers.smtp'))
             ->merge($this->app->config->get('mail.from'));
 
+        if (! $this->configured()) {
+            return;
+        }
+
         $this->configureMail();
     }
 
