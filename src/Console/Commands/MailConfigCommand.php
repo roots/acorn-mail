@@ -13,7 +13,8 @@ class MailConfigCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mail:config';
+    protected $signature = 'mail:config
+                            {--force : Overwrite any existing files.}';
 
     /**
      * The console command description.
@@ -40,7 +41,7 @@ class MailConfigCommand extends Command
 
         $destination = $this->laravel->configPath('mail.php');
 
-        if (file_exists($destination)) {
+        if (file_exists($destination) && ! $this->option('force')) {
             $this->components->error('The mail config file already exists.');
 
             return;
