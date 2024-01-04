@@ -59,13 +59,13 @@ class MailTestCommand extends Command
 
         $this->components->info("Sending a test email to <fg=blue>{$recipient}</>...");
 
-        $result = wp_mail(
+        $mail = wp_mail(
             $recipient,
             'Test Email',
             'This is a test email from WordPress.'
         );
 
-        if ($result) {
+        if ($mail) {
             $this->components->info('The test email was sent successfully.');
 
             return;
