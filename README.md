@@ -27,7 +27,7 @@ Start by publishing Acorn's mail config:
 $ wp acorn mail:config
 ```
 
-SMTP credentials are configured using the published `mail.php` config file.
+SMTP credentials can be found in the published `mail.php` config file.
 
 ## Usage
 
