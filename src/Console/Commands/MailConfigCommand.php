@@ -32,6 +32,12 @@ class MailConfigCommand extends Command
             '/config/mail.php'
         );
 
+        if (! file_exists($config)) {
+            $this->components->error('The Acorn vendor mail config file could not be found.');
+
+            return;
+        }
+
         $destination = $this->laravel->configPath('mail.php');
 
         if (file_exists($destination)) {
