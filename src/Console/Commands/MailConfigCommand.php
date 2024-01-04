@@ -48,7 +48,7 @@ class MailConfigCommand extends Command
         }
 
         file_put_contents(
-            $this->laravel->configPath('mail.php'),
+            $destination,
             file_get_contents($config)
         );
 
