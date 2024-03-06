@@ -99,9 +99,13 @@ class AcornMail
      */
     public function configured(): bool
     {
-        return $this->config->get('host') &&
-            $this->config->get('port') &&
-            $this->config->get('username') &&
-            $this->config->get('password');
+        if (! $this->app->isProduction()) {
+            return $this->config->get('host') && $this->config->get('port');
+        }
+
+        return $this->config->get('host')
+            && $this->config->get('port')
+            && $this->config->get('username')
+            && $this->config->get('password');
     }
 }
