@@ -47,6 +47,13 @@ class MailTestCommand extends Command
         add_action('phpmailer_init', function ($phpmailer) use ($instance) {
             $phpmailer->SMTPDebug = 1;
             $phpmailer->Debugoutput = fn ($error) => $instance->errors[] = $error;
+
+            $information = collect($phpmailer)
+                ->filter(fn ($value, $key) => in_array($key, ['Host', 'Port', 'Username', 'Password', 'Timeout', 'FromName', 'From', 'Subject']))
+                ->map(fn ($value, $key) => ('Password' === $key && ! empty($value)) ? str_repeat('*', strlen($value)) : $value)
+                ->map(fn ($value, $key) => $key . ': ' . ((is_null($value) || empty($value)) ? 'Not set' : "<fg=blue>{$value}</>"));
+
+            $this->components->bulletList($information);
         });
 
         $recipient = $this->option('to') ?: $this->askForRecipient();
