@@ -58,6 +58,7 @@ class AcornMail
             $mail->Username = $this->config->get('username');
             $mail->Password = $this->config->get('password');
             $mail->Timeout = $this->config->get('timeout', $mail->Timeout);
+            $mail->SMTPSecure = $this->config->get('encryption', $mail->SMTPSecure);
 
             $mail->setFrom(
                 $this->fromAddress(),

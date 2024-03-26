@@ -31,7 +31,7 @@ SMTP credentials can be found in the published `mail.php` config file and defaul
 
 ## Usage
 
-For most configurations, you can simply set the following environment variables:
+For most configurations, you can simply set the following variables in your environment:
 
 ```env
 MAIL_HOST=
@@ -40,6 +40,12 @@ MAIL_USERNAME=
 MAIL_PASSWORD=
 MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
+```
+
+If you need to change the default encryption from `tls`, you can set the encryption variable:
+
+```env
+MAIL_ENCRYPTION=ssl
 ```
 
 Once the credentials are properly configured, you can send a test email using Acorn's CLI:

@@ -23,11 +23,24 @@ class MailTestCommand extends Command
     protected $description = 'Test the WordPress SMTP mailer';
 
     /**
-     * The error collection.
-     *
-     * @var \Illuminate\Support\Collection
+     * The mail errors.
      */
-    protected $errors = [];
+    protected array $errors = [];
+
+    /**
+     * The mail options.
+     */
+    protected array $options = [
+        'From' => 'From',
+        'FromName' => 'From Name',
+        'Host' => 'Host',
+        'Password' => 'Password',
+        'Port' => 'Port',
+        'SMTPSecure' => 'Encryption',
+        'Subject' => 'Subject',
+        'Timeout' => 'Timeout',
+        'Username' => 'Username',
+    ];
 
     /**
      * Execute the console command.
@@ -49,9 +62,9 @@ class MailTestCommand extends Command
             $phpmailer->Debugoutput = fn ($error) => $instance->errors[] = $error;
 
             $config = collect($phpmailer)
-                ->filter(fn ($value, $key) => in_array($key, ['Host', 'Port', 'Username', 'Password', 'Timeout', 'FromName', 'From', 'Subject']))
+                ->filter(fn ($value, $key) => in_array($key, array_keys($this->options)))
                 ->map(fn ($value, $key) => $key === 'Password' ? Str::mask($value, '*', 0) : $value)
-                ->map(fn ($value, $key) => "{$key}: ".((is_null($value) || empty($value)) ? 'Not set' : "<fg=blue>{$value}</>"));
+                ->map(fn ($value, $key) => Str::finish($this->options[$key], ': ').(is_null($value) || empty($value) ? 'Not set' : "<fg=blue>{$value}</>"));
 
             $this->components->bulletList($config);
         });
@@ -78,21 +91,21 @@ class MailTestCommand extends Command
             return;
         }
 
-        $this->errors = collect($this->errors)
+        $errors = collect($this->errors)
             ->filter(fn ($error) => Str::startsWith($error, 'SMTP Error: '));
 
-        if ($this->errors->isEmpty()) {
+        if ($errors->isEmpty()) {
             $this->components->error('The test email failed to send.');
 
             return;
         }
 
-        $this->errors = $this->errors
+        $errors = $errors
             ->map(fn ($error) => "  {$error}")
             ->map(fn ($error) => str_replace("\n", "\n  ", $error));
 
         $this->components->error('The test email failed to send. The following errors were encountered:');
-        $this->line($this->errors->first());
+        $this->line($errors->first());
     }
 
     /**
