@@ -28,7 +28,7 @@ class MailTestCommand extends Command
     protected array $errors = [];
 
     /**
-     * The relevant mail options.
+     * The mail options.
      */
     protected array $options = [
         'From' => 'From',
