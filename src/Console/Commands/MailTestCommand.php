@@ -48,12 +48,12 @@ class MailTestCommand extends Command
             $phpmailer->SMTPDebug = 1;
             $phpmailer->Debugoutput = fn ($error) => $instance->errors[] = $error;
 
-            $information = collect($phpmailer)
+            $config = collect($phpmailer)
                 ->filter(fn ($value, $key) => in_array($key, ['Host', 'Port', 'Username', 'Password', 'Timeout', 'FromName', 'From', 'Subject']))
-                ->map(fn ($value, $key) => ('Password' === $key && ! empty($value)) ? str_repeat('*', strlen($value)) : $value)
-                ->map(fn ($value, $key) => $key . ': ' . ((is_null($value) || empty($value)) ? 'Not set' : "<fg=blue>{$value}</>"));
+                ->map(fn ($value, $key) => $key === 'Password' ? Str::mask($value, '*', 0) : $value)
+                ->map(fn ($value, $key) => "{$key}: ".((is_null($value) || empty($value)) ? 'Not set' : "<fg=blue>{$value}</>"));
 
-            $this->components->bulletList($information);
+            $this->components->bulletList($config);
         });
 
         $recipient = $this->option('to') ?: $this->askForRecipient();
