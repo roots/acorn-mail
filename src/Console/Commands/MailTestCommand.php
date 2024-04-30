@@ -14,7 +14,9 @@ class MailTestCommand extends Command
      * @var string
      */
     protected $signature = 'mail:test
-                            {--to= : The email address to send the test email to.}';
+                            {--to= : The email address to send the test email to.}
+                            {--subject=Test email : The subject of the test email}
+                            {--body=This is a test email from WordPress. : The body of the test email}';
 
     /**
      * The console command description.
@@ -82,8 +84,8 @@ class MailTestCommand extends Command
 
         $mail = wp_mail(
             $recipient,
-            'Test Email',
-            'This is a test email from WordPress.'
+            $this->option('subject'),
+            $this->option('body')
         );
 
         if ($mail) {
