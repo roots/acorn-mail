@@ -52,7 +52,7 @@ class AcornMail
         add_filter('phpmailer_init', function ($mail) {
             $mail->isSMTP();
 
-            $mail->SMTPAuth = true;
+            $mail->SMTPAuth = ($this->config->get('username') && $this->config->get('password'));
             $mail->Host = $this->config->get('host');
             $mail->Port = $this->config->get('port');
             $mail->Username = $this->config->get('username');
