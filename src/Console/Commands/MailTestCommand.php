@@ -4,6 +4,7 @@ namespace Roots\AcornMail\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Roots\AcornMail\AcornMail;
 
 class MailTestCommand extends Command
 {
@@ -13,9 +14,7 @@ class MailTestCommand extends Command
      * @var string
      */
     protected $signature = 'mail:test
-                            {--to= : The email address to send the test email to.}
-                            {--subject=Test email : The subject of the test email}
-                            {--body=This is a test email from WordPress. : The body of the test email}';
+                            {--to= : The email address to send the test email to.}';
 
     /**
      * The console command description.
@@ -49,7 +48,7 @@ class MailTestCommand extends Command
      */
     public function handle()
     {
-        $package = app('Roots\AcornMail');
+        $package = app()->make(AcornMail::class);
 
         if (! $package->configured()) {
             $this->components->error('The mail SMTP configuration is not set.');
@@ -66,7 +65,7 @@ class MailTestCommand extends Command
             $config = collect($phpmailer)
                 ->filter(fn ($value, $key) => in_array($key, array_keys($this->options)))
                 ->map(fn ($value, $key) => $key === 'Password' ? Str::mask($value, '*', 0) : $value)
-                ->map(fn ($value, $key) => Str::finish($this->options[$key], ': ').(is_null($value) || empty($value) ? 'Not set' : "<fg=blue>{$value}</>"));
+                ->map(fn ($value, $key) => Str::finish($this->options[$key], ': ') . (is_null($value) || empty($value) ? 'Not set' : "<fg=blue>{$value}</>"));
 
             $this->components->bulletList($config);
         });
@@ -83,8 +82,8 @@ class MailTestCommand extends Command
 
         $mail = wp_mail(
             $recipient,
-            $this->option('subject'),
-            $this->option('body')
+            'Test Email',
+            'This is a test email from WordPress.'
         );
 
         if ($mail) {

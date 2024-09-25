@@ -13,7 +13,7 @@ class AcornMailServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Roots\AcornMail', fn () => AcornMail::make($this->app));
+        $this->app->singleton(AcornMail::class, fn () => AcornMail::make($this->app));
     }
 
     /**
@@ -30,6 +30,6 @@ class AcornMailServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->app->make('Roots\AcornMail');
+        $this->app->make(AcornMail::class);
     }
 }
