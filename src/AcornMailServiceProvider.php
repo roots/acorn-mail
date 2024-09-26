@@ -25,7 +25,7 @@ class AcornMailServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(
-            __DIR__ . '/../resources/views',
+            __DIR__.'/../resources/views',
             'AcornMail',
         );
 
