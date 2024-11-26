@@ -4,6 +4,7 @@ namespace Roots\AcornMail\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Roots\AcornMail\AcornMail;
 
 class MailTestCommand extends Command
 {
@@ -47,7 +48,7 @@ class MailTestCommand extends Command
      */
     public function handle()
     {
-        $package = app('Roots\AcornMail');
+        $package = app()->make(AcornMail::class);
 
         if (! $package->configured()) {
             $this->components->error('The mail SMTP configuration is not set.');

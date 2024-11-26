@@ -13,7 +13,8 @@ class AcornMailServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Roots\AcornMail', fn () => AcornMail::make($this->app));
+        $this->app->singleton(AcornMail::class, fn () => AcornMail::make($this->app));
+        $this->app->singleton(Widget::class, fn () => Widget::make($this->app));
     }
 
     /**
@@ -23,6 +24,11 @@ class AcornMailServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(
+            __DIR__.'/../resources/views',
+            'AcornMail',
+        );
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\Commands\MailConfigCommand::class,
@@ -30,6 +36,7 @@ class AcornMailServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->app->make('Roots\AcornMail');
+        $this->app->make(AcornMail::class);
+        $this->app->make(Widget::class);
     }
 }
