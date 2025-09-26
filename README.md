@@ -51,7 +51,17 @@ MAIL_ENCRYPTION=ssl
 Once the credentials are properly configured, you can send a test email using Acorn's CLI:
 
 ```sh
-$ wp acorn mail:test [--to=]
+$ wp acorn mail:test [--to=] [--subject=] [--body=]
+```
+
+You can customize the test email subject and body:
+
+```sh
+# Test with custom subject and body
+$ wp acorn mail:test --subject="Deploy Test" --body="Deployment successful"
+
+# Test with custom recipient
+$ wp acorn mail:test --to=admin@example.com
 ```
 
 If any errors are detected, they will be printed to console.
