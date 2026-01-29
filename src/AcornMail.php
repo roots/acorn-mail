@@ -64,6 +64,8 @@ class AcornMail
                 $this->fromAddress(),
                 $this->fromName()
             );
+
+            $mail->Sender = $mail->From;
         });
     }
 
