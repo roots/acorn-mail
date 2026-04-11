@@ -14,8 +14,8 @@ Roots is an independent open source org, supported only by developers like you. 
 
 ## Requirements
 
-- [PHP](https://secure.php.net/manual/en/install.php) >= 8.1
-- [Acorn](https://github.com/roots/acorn) >= 3.0
+- [PHP](https://secure.php.net/manual/en/install.php) >= 8.3
+- [Acorn](https://github.com/roots/acorn) >= 6.0
 
 ## Installation
 
@@ -48,10 +48,10 @@ MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
 ```
 
-If you need to change the default encryption from `tls`, you can set the encryption variable:
+If you need to change the default scheme from `tls`, you can set the scheme variable:
 
 ```env
-MAIL_ENCRYPTION=ssl
+MAIL_SCHEME=ssl
 ```
 
 Once the credentials are properly configured, you can send a test email using Acorn's CLI:
